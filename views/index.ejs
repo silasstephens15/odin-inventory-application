@@ -3,10 +3,18 @@
   <%- include('partials/head')%>
   <body>
     <h1>Odin Computer Hardware Store</h1>
+    <h2>What Is This Site?</h2>
     <p>
       This is a small application which follows the Odin Project's Inventory
       Application Project. Express is used as well as EJS and PG for view
       templates and PostgreSQL access respectively.
     </p>
+    <h2>Product Categories</h2>
+    <ul>
+      <li>Browse All</li>
+    <% categories.map((category)=>{%>
+      <li><%=category.name%></li>
+      <%})%>
+      </ul>
   </body>
 </html>
