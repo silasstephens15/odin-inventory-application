@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('partials/head')%>
+  <body>
+        <% parts.map((part)=>{%>
+            <div class="part">
+                <ul>
+                    <li><%=part.name%></li>
+                    <li><%=part.price%></li>
+                </ul>
+            </div>
+            <%})%>
+  </body>
+</html>

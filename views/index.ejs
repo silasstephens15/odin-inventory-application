@@ -11,9 +11,9 @@
     </p>
     <h2>Product Categories</h2>
     <ul>
-      <li>Browse All</li>
+      <li><a href="/category/all">Browse All</a></li>
     <% categories.map((category)=>{%>
-      <li><%=category.name%></li>
+      <li><a href="/category/<%=category.name%>"><%=category.name%></a></li>
       <%})%>
       </ul>
   </body>
