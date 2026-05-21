@@ -1,5 +1,9 @@
 const { Router } = require("express");
-const { getCategories, getProductInCategory } = require("../models/query");
+const {
+  getCategories,
+  getProductInCategory,
+  getAllProducts,
+} = require("../models/query");
 
 const categoryRouter = Router();
 
@@ -9,6 +13,11 @@ getCategories().then((categories) => {
       getProductInCategory(category.name).then((parts) => {
         res.render("category", { title: category.name, parts });
       });
+    });
+  });
+  categoryRouter.get("/all", (req, res) => {
+    getAllProducts().then((parts) => {
+      res.render("category", { title: "All", parts });
     });
   });
 });

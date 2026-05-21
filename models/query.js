@@ -7,10 +7,24 @@ async function getCategories() {
 
 async function getProductInCategory(category) {
   const { rows } = await pool.query(
-    "SELECT parts.name, parts.price FROM categories JOIN parts on categories.id = parts.category_id WHERE categories.name = $1;",
+    `SELECT parts.name, parts.price, categories.name AS category_name, manufacturers.name AS manufacturer_name 
+    FROM categories 
+    JOIN parts on categories.id = parts.category_id 
+    JOIN manufacturers on manufacturers.id = parts.manufacturer_id
+    WHERE categories.name = $1;`,
     [category],
   );
   return rows;
 }
 
-module.exports = { getCategories, getProductInCategory };
+async function getAllProducts() {
+  const { rows } = await pool.query(
+    `SELECT parts.price, parts.name, categories.name AS category_name, manufacturers.name AS manufacturer_name 
+     FROM categories
+     JOIN parts on categories.id = parts.category_id
+     JOIN manufacturers on manufacturers.id = parts.manufacturer_id;`,
+  );
+  return rows;
+}
+
+module.exports = { getCategories, getProductInCategory, getAllProducts };
