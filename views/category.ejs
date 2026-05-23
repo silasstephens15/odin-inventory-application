@@ -3,13 +3,18 @@
   <%- include('partials/head')%>
   <body>
     <%- include('partials/navbar')%>
+    <%if (oneCategory==true){;%>
+        <h2><%=title%></h2>
+    <%}%>
         <% parts.map((part)=>{%>
             <div class="part">
                 <ul>
                     <li><%=part.name%></li>
                     <li><%=part.price%></li>
                     <li><%=part.manufacturer_name%></li>
+                    <%if (oneCategory == false) {%>
                     <li><%=part.category_name%></li>
+                    <%}%>
                 </ul>
             </div>
             <%})%>

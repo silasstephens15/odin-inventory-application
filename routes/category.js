@@ -12,13 +12,17 @@ getCategories().then((categories) => {
   categories.map((category) => {
     categoryRouter.get("/" + category.name, (req, res) => {
       getProductInCategory(category.name).then((parts) => {
-        res.render("category", { title: category.name, parts });
+        res.render("category", {
+          title: category.name,
+          parts,
+          oneCategory: true,
+        });
       });
     });
   });
   categoryRouter.get("/all", (req, res) => {
     getAllProducts().then((parts) => {
-      res.render("category", { title: "All", parts });
+      res.render("category", { title: "All", parts, oneCategory: false });
     });
   });
   categoryRouter.get("/add", (req, res) => {
