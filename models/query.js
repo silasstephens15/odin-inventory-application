@@ -5,6 +5,11 @@ async function getCategories() {
   return rows;
 }
 
+async function getManufacturers() {
+  const { rows } = await pool.query("SELECT * FROM manufacturers;");
+  return rows;
+}
+
 async function getProductInCategory(category) {
   const { rows } = await pool.query(
     `SELECT parts.name, parts.price, categories.name AS category_name, manufacturers.name AS manufacturer_name 
@@ -27,4 +32,9 @@ async function getAllProducts() {
   return rows;
 }
 
-module.exports = { getCategories, getProductInCategory, getAllProducts };
+module.exports = {
+  getCategories,
+  getProductInCategory,
+  getAllProducts,
+  getManufacturers,
+};
