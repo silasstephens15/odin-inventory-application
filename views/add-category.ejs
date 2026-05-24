@@ -3,9 +3,11 @@
   <%-include('partials/head')%>
   <body>
     <%- include('partials/navbar')%>
-    <form action="/category/add" method="POST">
-      <h2>Add Category</h2>
-      <label for="name">Category Name</label>
+    <form action="/<%=location%>/add" method="POST">
+      <h2>Add <%=location[0].toUpperCase() + location.slice(1)%></h2>
+      <label for="name"
+        ><%=location[0].toUpperCase() + location.slice(1)%> Name</label
+      >
       <input type="text" name="name" id="name" />
       <button
         type="button"

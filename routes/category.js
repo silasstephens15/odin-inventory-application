@@ -12,21 +12,27 @@ getCategories().then((categories) => {
   categories.map((category) => {
     categoryRouter.get("/" + category.name, (req, res) => {
       getProductInCategory(category.name).then((parts) => {
-        res.render("category", {
+        res.render("browse", {
           title: category.name,
           parts,
           oneCategory: true,
+          oneManufacturer: false,
         });
       });
     });
   });
   categoryRouter.get("/all", (req, res) => {
     getAllProducts().then((parts) => {
-      res.render("category", { title: "All", parts, oneCategory: false });
+      res.render("browse", {
+        title: "All",
+        parts,
+        oneCategory: false,
+        oneManufacturer: false,
+      });
     });
   });
   categoryRouter.get("/add", (req, res) => {
-    res.render("add-category", { title: "Add Category" });
+    res.render("add-category", { title: "Add Category", location: "category" });
   });
   categoryRouter.post("/add", (req, res, next) => {
     addCategory(req.body.name, req.body.password)

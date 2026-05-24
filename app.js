@@ -4,6 +4,7 @@ const path = require("node:path");
 const { categoryRouter } = require("./routes/category");
 const NotFoundError = require("./error/notFound");
 const { partRouter } = require("./routes/part");
+const { manufacturerRouter } = require("./routes/manufacturer");
 
 const app = express();
 app.set("views", path.join(__dirname, "views"));
@@ -13,6 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/", indexRouter);
 app.use("/category", categoryRouter);
 app.use("/part", partRouter);
+app.use("/manufacturer", manufacturerRouter);
 app.use((req, res) => {
   throw new NotFoundError("404: Page not found");
   Next(err);

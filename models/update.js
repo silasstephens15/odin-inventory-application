@@ -10,6 +10,14 @@ async function addCategory(name, password) {
   }
 }
 
+async function addManufacturer(name, password) {
+  if (password == process.env.PASSWORD) {
+    await pool.query("INSERT INTO manufacturers (name) VALUES ($1);", [name]);
+  } else {
+    throw new ForbiddenError("403: Forbidden. Incorrect Password");
+  }
+}
+
 async function addPart(name, price, category, manufacturer, password) {
   if (password == process.env.PASSWORD) {
     try {
@@ -30,4 +38,4 @@ async function addPart(name, price, category, manufacturer, password) {
   }
 }
 
-module.exports = { addCategory, addPart };
+module.exports = { addCategory, addPart, addManufacturer };
