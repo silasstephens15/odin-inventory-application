@@ -38,4 +38,21 @@ async function addPart(name, price, category, manufacturer, password) {
   }
 }
 
-module.exports = { addCategory, addPart, addManufacturer };
+async function updateAmount(name, amount, password) {
+  if (password == process.env.PASSWORD) {
+    try {
+      await pool.query("UPDATE parts SET amount = $1 WHERE name = $2", [
+        amount,
+        name,
+      ]);
+    } catch {
+      throw new InternalServiceError(
+        "500: Internal Service Error. Database Error",
+      );
+    }
+  } else {
+    throw new ForbiddenError("403: Forbidden. Incorrect Password");
+  }
+}
+
+module.exports = { addCategory, addPart, addManufacturer, updateAmount };

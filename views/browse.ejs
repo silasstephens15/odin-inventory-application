@@ -20,8 +20,34 @@
                     <%if (oneCategory == false) {%>
                     <li><%=part.category_name%></li>
                     <%}%>
+                    <li id="<%=part.name%>-selector">Amount: <%=part.amount%></li>
+                    <li style="display: none;" class="hidden">
+                        <form action="/part/amount" method="POST">
+                        <label for="<%=part.name%>"></label>
+                        <input 
+                        id="<%=part.name%>"
+                         name="<%=part.name%>" 
+                         type="number" 
+                         value="<%=part.amount%>"
+                         min="0"/>
+                         <label for="password">Password</label>
+                         <input type="text" name="password" id="password">
+                        <button type="submit">Submit Change</button>
+                    </form>
+                </li>
                 </ul>
             </div>
             <%})%>
+    <script>
+        const body = document.querySelector('body');
+
+        body.addEventListener('dblclick', (e)=>{
+            if (e.target.id.slice(-8) == 'selector'){
+                const form = e.target.parentElement.querySelector('.hidden');
+                form.style.display = 'block';
+                e.target.style.display = 'none';
+            };
+        })
+    </script>
   </body>
 </html>

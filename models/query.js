@@ -12,7 +12,7 @@ async function getManufacturers() {
 
 async function getProductInCategory(category) {
   const { rows } = await pool.query(
-    `SELECT parts.name, parts.price, categories.name AS category_name, manufacturers.name AS manufacturer_name 
+    `SELECT parts.name, parts.price, parts.amount, categories.name AS category_name, manufacturers.name AS manufacturer_name 
     FROM categories 
     JOIN parts on categories.id = parts.category_id 
     JOIN manufacturers on manufacturers.id = parts.manufacturer_id
@@ -24,7 +24,7 @@ async function getProductInCategory(category) {
 
 async function getProductInManufacturer(manufacturer) {
   const { rows } = await pool.query(
-    `SELECT parts.name, parts.price, categories.name AS category_name, manufacturers.name AS manufacturer_name 
+    `SELECT parts.name, parts.price, parts.amount, categories.name AS category_name, manufacturers.name AS manufacturer_name 
     FROM categories 
     JOIN parts on categories.id = parts.category_id 
     JOIN manufacturers on manufacturers.id = parts.manufacturer_id
@@ -36,7 +36,7 @@ async function getProductInManufacturer(manufacturer) {
 
 async function getAllProducts() {
   const { rows } = await pool.query(
-    `SELECT parts.price, parts.name, categories.name AS category_name, manufacturers.name AS manufacturer_name 
+    `SELECT parts.price, parts.name, parts.amount, categories.name AS category_name, manufacturers.name AS manufacturer_name 
      FROM categories
      JOIN parts on categories.id = parts.category_id
      JOIN manufacturers on manufacturers.id = parts.manufacturer_id;`,
