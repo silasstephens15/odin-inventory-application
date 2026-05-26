@@ -35,6 +35,12 @@
                         <button type="submit">Submit Change</button>
                     </form>
                 </li>
+                <li><div>
+                    <button type="button" class="delete">Delete</button>
+                    <div class="hidden" style="display: none;"><label for="password">Password</label>
+                         <input type="text" name="password" id="password" data-name="<%=part.name%>">
+                        <button type="button" class="hidden delete">Submit Change</button></div>
+                </div></li>
                 </ul>
             </div>
             <%})%>
@@ -46,6 +52,28 @@
                 const form = e.target.parentElement.querySelector('.hidden');
                 form.style.display = 'block';
                 e.target.style.display = 'none';
+            };
+        });
+        body.addEventListener('click', (e)=>{
+            if(e.target.classList.contains('delete')){
+                const form = e.target.parentElement.querySelector('.hidden');
+                form.style.display = 'block';
+             if(e.target.classList.contains('hidden') && e.target.type == 'button'){
+                const input = e.target.parentElement.querySelector('input');
+                if(input.value == ''){
+                    alert('Enter password')
+                    return
+                }
+                const endpoint = `/part/${input.dataset.name}&${input.value.replace('/', '%2F')}`
+                fetch(endpoint, 
+                {method: "DELETE"})
+                .then((res)=>{
+                    const res2 = res.clone()
+                    res.json().then((data)=>{window.location.href = data.redirect}).catch(()=>{
+                        res2.text().then((html)=>{document.querySelector('html').innerHTML = html})
+                    });
+                }).catch(err=>console.log(err));
+             };
             };
         })
     </script>

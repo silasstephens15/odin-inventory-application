@@ -3,6 +3,7 @@ const { getCategories, getManufacturers } = require("../models/query");
 const InternalServiceError = require("../error/internalServiceError");
 const { addPart, updateAmount } = require("../models/update");
 const UnprocessableError = require("../error/unprocessableError");
+const ForbiddenError = require("../error/forbidden");
 
 const partRouter = Router();
 
@@ -40,6 +41,13 @@ partRouter.post("/amount", async (req, res, next) => {
     return next(err);
   }
   res.redirect(req.headers.referer);
+});
+partRouter.delete("/:name&:password", async (req, res, next) => {
+  console.log(req.params.password);
+  if (req.params.password != process.env.PASSWORD) {
+    return next(new ForbiddenError("403: Incorrect password"));
+  }
+  res.json({ redirect: req.headers.referer });
 });
 
 module.exports = { partRouter };
