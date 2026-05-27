@@ -17,18 +17,19 @@
                          <input type="text" name="password" id="password" data-name="<%=title%>">
                         <button type="button" class="hidden delete <%=title%>">Submit Change</button></div>
     <%}%>
+    <div class="part-container">
         <% parts.map((part)=>{%>
             <div class="part">
                 <ul>
-                    <li><%=part.name%></li>
-                    <li><%=part.price%></li>
+                    <li><h3><%=part.name%></h3></li>
+                    <li>Price: $<%=part.price%></li>
                     <%if (oneManufacturer == false) {%>
-                    <li><%=part.manufacturer_name%></li>
+                    <li>Manufacturer: <%=part.manufacturer_name%></li>
                     <%}%>
                     <%if (oneCategory == false) {%>
-                    <li><%=part.category_name%></li>
+                    <li>Category: <%=part.category_name%></li>
                     <%}%>
-                    <li id="<%=part.name%>-selector">Amount: <%=part.amount%></li>
+                    <li id="<%=part.name%>-selector" class="dblclick">Amount: <%=part.amount%></li>
                     <li style="display: none;" class="hidden">
                         <form action="/part/amount" method="POST">
                         <label for="<%=part.name%>"></label>
@@ -52,6 +53,7 @@
                 </ul>
             </div>
             <%})%>
+            </div>
     <script>
         const body = document.querySelector('body');
 

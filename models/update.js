@@ -22,10 +22,10 @@ async function addPart(name, price, category, manufacturer, password) {
   if (password == process.env.PASSWORD) {
     try {
       await pool.query(
-        `INSERT INTO parts (name, price, category_id, manufacturer_id)
+        `INSERT INTO parts (name, price, category_id, manufacturer_id, amount)
         VALUES ($1, $2,
         (SELECT id FROM categories WHERE name = $3),
-        (SELECT id FROM manufacturers WHERE name = $4));`,
+        (SELECT id FROM manufacturers WHERE name = $4), 1);`,
         [name, price, category, manufacturer],
       );
     } catch {
