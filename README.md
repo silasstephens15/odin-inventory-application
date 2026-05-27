@@ -20,3 +20,6 @@ DEV
 CONNECTION_STRING
 
 are needed.
+
+Deployment can be found through Render:
+https://odin-inventory-application-xwd6.onrender.com
