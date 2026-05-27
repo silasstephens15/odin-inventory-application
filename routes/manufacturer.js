@@ -4,7 +4,8 @@ const {
   getProductInManufacturer,
   getAllProducts,
 } = require("../models/query");
-const { addManufacturer } = require("../models/update");
+const { addManufacturer, deleteManufacturer } = require("../models/update");
+const ForbiddenError = require("../error/forbidden");
 
 const manufacturerRouter = Router();
 
@@ -46,6 +47,14 @@ getManufacturers().then((manufacturers) => {
         next(err);
       });
   });
+});
+manufacturerRouter.delete("/:name&:password", async (req, res, next) => {
+  if (req.params.password != process.env.PASSWORD) {
+    return new ForbiddenError("Incorrect Password");
+  } else {
+    await deleteManufacturer(req.params.name);
+    res.json({ redirect: "/" });
+  }
 });
 
 module.exports = { manufacturerRouter };

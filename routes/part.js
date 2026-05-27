@@ -46,7 +46,7 @@ partRouter.delete("/:name&:password", async (req, res, next) => {
   if (req.params.password != process.env.PASSWORD) {
     return next(new ForbiddenError("403: Incorrect password"));
   } else {
-    deletePart(req.params.name);
+    await deletePart(req.params.name);
     res.json({ redirect: req.headers.referer });
   }
 });

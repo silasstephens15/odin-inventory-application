@@ -5,9 +5,17 @@
     <%- include('partials/navbar')%>
     <%if (oneCategory==true){;%>
         <h2><%=title%></h2>
+        <button type="button" class="delete">Delete Category</button>
+        <div class="hidden" style="display: none;"><label for="password">Password</label>
+                         <input type="text" name="password" id="password" data-name="<%=title%>">
+                        <button type="button" class="hidden delete <%=title%>">Submit Change</button></div>
     <%}%>
     <%if (oneManufacturer==true){;%>
         <h2><%=title%></h2>
+        <button type="button" class="delete">Delete Manufacturer</button>
+        <div class="hidden" style="display: none;"><label for="password">Password</label>
+                         <input type="text" name="password" id="password" data-name="<%=title%>">
+                        <button type="button" class="hidden delete <%=title%>">Submit Change</button></div>
     <%}%>
         <% parts.map((part)=>{%>
             <div class="part">
@@ -64,7 +72,10 @@
                     alert('Enter password')
                     return
                 }
-                const endpoint = `/part/${input.dataset.name}&${input.value.replace('/', '%2F')}`
+                let endpoint = `/part/${input.dataset.name}&${input.value.replace('/', '%2F')}`
+                if (e.target.classList.contains('<%=title%>') && <%=oneManufacturer%>){endpoint = '/manufacturer/'+ '<%=title%>' + `&${input.value.replace('/', '%2F')}`}
+                if (e.target.classList.contains('<%=title%>') && <%=oneCategory%>){endpoint = '/category/'+'<%=title%>' + `&${input.value.replace('/', '%2F')}`}
+                console.log(endpoint)
                 fetch(endpoint, 
                 {method: "DELETE"})
                 .then((res)=>{

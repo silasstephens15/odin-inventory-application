@@ -57,7 +57,38 @@ async function updateAmount(name, amount, password) {
 
 async function deletePart(name) {
   try {
-    await pool.query("DELETE FROM parts WHERE name = $1", [name]);
+    await pool.query("DELETE FROM parts WHERE name = $1;", [name]);
+  } catch (err) {
+    console.log(err);
+    throw new InternalServiceError(
+      "500: Internal Service Error. Database Error",
+    );
+  }
+}
+
+async function deleteManufacturer(name) {
+  try {
+    await pool.query(
+      `DELETE FROM parts WHERE manufacturer_id=
+       (SELECT id FROM manufacturers WHERE name = $1);`,
+      [name],
+    );
+    await pool.query(`DELETE FROM manufacturers WHERE name = $1;`, [name]);
+  } catch (err) {
+    console.log(err);
+    throw new InternalServiceError(
+      "500: Internal Service Error. Database Error",
+    );
+  }
+}
+async function deleteCategory(name) {
+  try {
+    await pool.query(
+      `DELETE FROM parts WHERE category_id=
+       (SELECT id FROM categories WHERE name = $1);`,
+      [name],
+    );
+    await pool.query(`DELETE FROM categories WHERE name = $1;`, [name]);
   } catch (err) {
     console.log(err);
     throw new InternalServiceError(
@@ -72,4 +103,6 @@ module.exports = {
   addManufacturer,
   updateAmount,
   deletePart,
+  deleteCategory,
+  deleteManufacturer,
 };

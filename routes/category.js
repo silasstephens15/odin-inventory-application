@@ -4,7 +4,7 @@ const {
   getProductInCategory,
   getAllProducts,
 } = require("../models/query");
-const { addCategory } = require("../models/update");
+const { addCategory, deleteCategory } = require("../models/update");
 
 const categoryRouter = Router();
 
@@ -43,6 +43,14 @@ getCategories().then((categories) => {
         next(err);
       });
   });
+});
+categoryRouter.delete("/:name&:password", async (req, res, next) => {
+  if (req.params.password != process.env.PASSWORD) {
+    return new ForbiddenError("Incorrect Password");
+  } else {
+    await deleteCategory(req.params.name);
+    res.json({ redirect: "/" });
+  }
 });
 
 module.exports = { categoryRouter };
