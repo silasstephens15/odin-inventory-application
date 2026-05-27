@@ -55,4 +55,21 @@ async function updateAmount(name, amount, password) {
   }
 }
 
-module.exports = { addCategory, addPart, addManufacturer, updateAmount };
+async function deletePart(name) {
+  try {
+    await pool.query("DELETE FROM parts WHERE name = $1", [name]);
+  } catch (err) {
+    console.log(err);
+    throw new InternalServiceError(
+      "500: Internal Service Error. Database Error",
+    );
+  }
+}
+
+module.exports = {
+  addCategory,
+  addPart,
+  addManufacturer,
+  updateAmount,
+  deletePart,
+};

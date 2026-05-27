@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const { getCategories, getManufacturers } = require("../models/query");
 const InternalServiceError = require("../error/internalServiceError");
-const { addPart, updateAmount } = require("../models/update");
+const { addPart, updateAmount, deletePart } = require("../models/update");
 const UnprocessableError = require("../error/unprocessableError");
 const ForbiddenError = require("../error/forbidden");
 
@@ -43,11 +43,12 @@ partRouter.post("/amount", async (req, res, next) => {
   res.redirect(req.headers.referer);
 });
 partRouter.delete("/:name&:password", async (req, res, next) => {
-  console.log(req.params.password);
   if (req.params.password != process.env.PASSWORD) {
     return next(new ForbiddenError("403: Incorrect password"));
+  } else {
+    deletePart(req.params.name);
+    res.json({ redirect: req.headers.referer });
   }
-  res.json({ redirect: req.headers.referer });
 });
 
 module.exports = { partRouter };
